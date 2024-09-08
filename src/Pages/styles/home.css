@@ -1,0 +1,247 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+p {
+  color: rgb(85, 85, 85);
+}
+
+/* TRANSITION */
+
+a,
+.btn {
+  transition: all 300ms ease;
+}
+
+/* DESKTOP NAV */
+
+nav,
+.nav-links {
+  display: flex;
+}
+
+nav {
+  justify-content: space-around;
+  align-items: center;
+  height: 25vh;
+  
+}
+
+.nav-links {
+  justify-content: space-around;
+  gap: 2rem;
+  list-style: none;
+  font-size: 1.5rem;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  text-decoration-color: white;
+}
+
+a:hover {
+  color: grey;
+  text-decoration: underline;
+  text-underline-offset: 1rem;
+  text-decoration-color: rgb(181, 181, 181);
+}
+
+.logo {
+  font-size: 1rem;
+ margin-right: 210px;
+}
+
+.logo:hover {
+  cursor: default;
+}
+.indianlogo02{
+  width: 100%;
+  height: 150px;
+  
+  
+}
+/* JUSTICE LOGO*/
+.justiceimage {
+  width: 100%;
+  height: 500px;
+}
+.text-box {
+  position: absolute;
+  top: 40%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 18px;
+}
+/* Information boxes */
+.information {
+  height: 30vh;
+  padding: 50px;
+}
+.info-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  height: 25vh;
+}
+
+.info-box1 {
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 8px;
+  width: 200px;
+  margin: 10px;
+  padding: 15px;
+  text-align: center;
+}
+.info-box2 {
+  background-color: skyblue;
+  border: 1px solid skyblue;
+  border-radius: 8px;
+  width: 200px;
+  margin: 10px;
+  padding: 15px;
+  text-align: center;
+}
+
+.info-box3 {
+  background-color: orange;
+  border: 1px solid orange;
+  border-radius: 8px;
+  width: 200px;
+  margin: 10px;
+  padding: 15px;
+  text-align: center;
+}
+.info-box4 {
+  background-color: green;
+  border: 1px solid green;
+  border-radius: 8px;
+  width: 200px;
+  margin: 10px;
+  padding: 15px;
+  text-align: center;
+}
+
+.info-box1 h2 {
+  margin: 0;
+  color: black;
+  justify-content: space-around;
+}
+
+.info-box1 p {
+  margin: 10px 0 0;
+  font-size: 18px;
+  color: black;
+}
+
+.info-box1 span {
+  font-weight: bold;
+  color: black;
+}
+.info-box2 h2 {
+  margin: 0;
+  color: black;
+  justify-content: space-around;
+}
+
+.info-box2 p {
+  margin: 10px 0 0;
+  font-size: 18px;
+  color: black;
+}
+
+.info-box2 span {
+  font-weight: bold;
+  color: black;
+}
+.info-box3 h2 {
+  margin: 0;
+  color: black;
+  justify-content: space-around;
+}
+
+.info-box3 p {
+  margin: 10px 0 0;
+  font-size: 18px;
+  color: black;
+}
+
+.info-box3 span {
+  font-weight: bold;
+  color: black;
+}
+.info-box4 h2 {
+  margin: 0;
+  color: black;
+  justify-content: space-around;
+}
+
+.info-box4 p {
+  margin: 10px 0 0;
+  font-size: 18px;
+  color: black;
+}
+
+.info-box4 span {
+  font-weight: bold;
+  color: black;
+}
+.aboutsection {
+  color: #444;
+}
+
+p {
+  color: #555;
+  line-height: 1.6;
+}
+/* Flex container for the layout */
+.container {
+  display: flex;
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Left column (main content) */
+.main-content {
+  flex: 2;
+  background-color: #fff;
+  padding: 20px;
+  margin-right: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between; /* Distribute space between the three parts */
+  padding: 30px;
+  background-color: black; /* Example background color */
+}
+
+.footer-links, .footer-content, .footer-social {
+  flex: 1; /* Ensure each part takes equal space */
+  padding: 10px;
+}
+
+.footer-links {
+  text-align: left;
+}
+
+.footer-content {
+  text-align: center;
+}
+
+.footer-social {
+  text-align: right;
+}

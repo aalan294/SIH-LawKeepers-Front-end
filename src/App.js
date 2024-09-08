@@ -55,10 +55,10 @@ const App = () => {
         <Route path="/admin/update/police" element={<UpdPolice />} />
 
         {/* Defender Routes */}
-        <Route path="/defender/login" element={<DefLogin />} />
-        <Route path="/defender/dashboard" element={<DefDashboard />} />
-        <Route path="/defender/case-details" element={<DefCaseDet />} />
-        <Route path="/defender/lawyer-list" element={<LawyerList />} />
+        <Route path="/user/login" element={<DefLogin />} />
+        <Route path="/user/dashboard" element={<DefDashboard />} />
+        <Route path="/user/case-details/:id" element={<DefCaseDet />} />
+        <Route path="/user/lawyer-list" element={<LawyerList />} />
 
         {/* Judge Routes */}
         <Route path="/judge/login" element={<JudLogin />} />
