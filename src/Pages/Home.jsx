@@ -2,6 +2,7 @@ import React from "react";
 import "./styles/home.css";
 import justice from "../Assets/justicelogo.jpg";
 import india from "../Assets/indianlogo.jpg";
+import { Link } from "react-router-dom";
 
 
 const Home = () => {
@@ -23,13 +24,16 @@ const Home = () => {
         <div>
           <ul class="nav-links">
             <li>
-              <a href="judge.html">Magistrate Login</a>
+              <Link to='/judge/login'>Magistrate Login</Link>
             </li>
             <li>
-              <a href="advocate.html">Advocate Login</a>
+              <Link to='/lawyer/login' >Advocate Login</Link>
             </li>
             <li>
-              <a href="defendant.html">Defendant Login</a>
+            <Link to='/user/login' >Defendant Login</Link>
+            </li>
+            <li>
+            <Link to='/police/login' >Station Login</Link>
             </li>
           </ul>
         </div>

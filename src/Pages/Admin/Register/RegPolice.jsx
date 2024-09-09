@@ -63,7 +63,7 @@ const ErrorMessage = styled.p`
 
 const web3 = new Web3(window.ethereum); // Adjust provider as needed
 
-const contractAddress = '0xc1B64F7343D87b0Ad439575F122fF57BF7a29f4d'; // Replace with your contract address
+const contractAddress = '0xA4bd3b69114E22096CbF24D285Ae0c56e3025186'; // Replace with your contract address
 
 const contract = new web3.eth.Contract(abi, contractAddress);
 

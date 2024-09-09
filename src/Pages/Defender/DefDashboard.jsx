@@ -102,7 +102,7 @@ const DefDashboard = () => {
         ☰
       </HamburgerMenu>
       <NavDropdown show={showMenu}>
-        <NavLink to="/lawyers">Lawyers List</NavLink>
+        <NavLink to="/user/lawyer-list">Lawyers List</NavLink>
         <NavLink to="/cases">Cases</NavLink>
         <NavLink to="/rsvp">RSVP</NavLink>
       </NavDropdown>

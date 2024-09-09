@@ -1,26 +1,46 @@
 export const abi = [
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"internalType": "enum CourtHearingSystem.Role",
-				"name": "role",
-				"type": "uint8"
-			}
-		],
-		"name": "assignRole",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "caseId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "judge",
+				"type": "address"
+			}
+		],
+		"name": "CaseAssignedJudge",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "caseId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "lawyer",
+				"type": "address"
+			}
+		],
+		"name": "CaseAssignedLawyer",
+		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -73,34 +93,6 @@ export const abi = [
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "firDocumentCID",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "description",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "initialProofName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "initialProofCID",
-				"type": "string"
-			}
-		],
-		"name": "createCase",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -132,57 +124,6 @@ export const abi = [
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "caseId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "proofName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "proofCID",
-				"type": "string"
-			}
-		],
-		"name": "submitProof",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "caseId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "status",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "hearingCount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "judgement",
-				"type": "string"
-			}
-		],
-		"name": "updateCase",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "admin",
 		"outputs": [
@@ -193,6 +134,60 @@ export const abi = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "caseId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "judge",
+				"type": "address"
+			}
+		],
+		"name": "assignJudgeToCase",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "caseId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "lawyer",
+				"type": "address"
+			}
+		],
+		"name": "assignLawyerToCase",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CourtHearingSystem.Role",
+				"name": "role",
+				"type": "uint8"
+			}
+		],
+		"name": "assignRole",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -234,9 +229,47 @@ export const abi = [
 				"internalType": "uint256",
 				"name": "hearingCount",
 				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "assignedJudge",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "assignedLawyer",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "firDocumentCID",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "initialProofName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "initialProofCID",
+				"type": "string"
+			}
+		],
+		"name": "createCase",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -297,6 +330,16 @@ export const abi = [
 						"internalType": "uint256",
 						"name": "hearingCount",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "assignedJudge",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "assignedLawyer",
+						"type": "address"
 					}
 				],
 				"internalType": "struct CourtHearingSystem.Case",
@@ -318,6 +361,57 @@ export const abi = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "caseId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "proofName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "proofCID",
+				"type": "string"
+			}
+		],
+		"name": "submitProof",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "caseId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "hearingCount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "judgement",
+				"type": "string"
+			}
+		],
+		"name": "updateCase",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

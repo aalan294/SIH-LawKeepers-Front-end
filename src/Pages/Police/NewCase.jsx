@@ -5,24 +5,30 @@ import { pinata } from '../../config'; // Adjust the path as needed
 import { abi } from '../../abi';
 import styled from 'styled-components';
 import api from '../../API/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 // Contract ABI and Address
-const contractAddress = '0xc1B64F7343D87b0Ad439575F122fF57BF7a29f4d'; // Replace with your actual contract address
+const contractAddress = '0xA4bd3b69114E22096CbF24D285Ae0c56e3025186'; // Replace with your actual contract address
 
+// Styled Components
 const NewCaseContainer = styled.div`
-  max-width: 600px;
+  width: 80%;
+  height: 80%;
   margin: 0 auto;
+  margin-top: 3rem;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
-  position: relative; /* To position the button correctly */
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+  background-color: #000;
+  color: #fff;
+  position: relative;
 `;
 
 const Title = styled.h2`
   text-align: center;
-  color: #333;
+  color: #ff0000;
+  font-size: 2rem;
+  margin-bottom: 20px;
 `;
 
 const Form = styled.form`
@@ -33,12 +39,23 @@ const Form = styled.form`
 
 const Input = styled.input`
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ff0000;
   border-radius: 4px;
+  background-color: #222;
+  color: #fff;
+
+  &:focus {
+    border-color: #ff0000;
+    outline: none;
+  }
 `;
 
 const FileInput = styled.input`
   padding: 5px;
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #ff0000;
+  border-radius: 4px;
 `;
 
 const Button = styled.button`
@@ -46,7 +63,7 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   color: #fff;
-  background-color: ${props => props.primary ? '#007bff' : '#28a745'};
+  background-color: ${props => props.primary ? '#ff0000' : '#28a745'};
   cursor: pointer;
   font-size: 16px;
 
@@ -62,13 +79,47 @@ const ConnectButton = styled.button`
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
+  background-color: #ff0000;
   color: #fff;
   cursor: pointer;
   font-size: 16px;
 
   &:hover {
     opacity: 0.9;
+  }
+`;
+
+const HamburgerMenu = styled.div`
+  position: relative;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  font-size: 2rem;
+  z-index: 1000;
+  color: #fff;
+`;
+
+const NavDropdown = styled.div`
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  background-color: #222;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  display: ${props => (props.show ? 'block' : 'none')};
+`;
+
+const NavLink = styled(Link)`
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #ff0000;
+
+  &:hover {
+    background-color: #333;
+    color: #ff0000;
   }
 `;
 
@@ -96,8 +147,13 @@ const NewCase = () => {
   const [providerRequested, setProviderRequested] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
   const [uploadingInitialProofFile, setUploadingInitialProofFile] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const navigate = useNavigate();
+
+  const handleMenuToggle = () => {
+    setShowMenu(!showMenu);
+  };
 
   useEffect(() => {
     const initWeb3 = async () => {
@@ -176,83 +232,82 @@ const NewCase = () => {
     e.preventDefault();
 
     if (!fileCid || !initialProofCid) {
-        setError('Both FIR and Initial Proof document uploads are required');
-        return;
+      setError('Both FIR and Initial Proof document uploads are required');
+      return;
     }
 
     // Construct JSON data for the blockchain
     const caseData = {
-        firDocumentCID: fileCid,
-        description: formData.description,
-        initialProofName: formData.initialProofName,
-        initialProofCID: initialProofCid
+      firDocumentCID: fileCid,
+      description: formData.description,
+      initialProofName: formData.initialProofName,
+      initialProofCID: initialProofCid
     };
 
     try {
-        // Call the smart contract method to create the case
-        const response = await contract.methods.createCase(
-            caseData.firDocumentCID,
-            caseData.description,
-            caseData.initialProofName,
-            caseData.initialProofCID
-        ).send({ from: account });
+      // Call the smart contract method to create the case
+      const response = await contract.methods.createCase(
+        caseData.firDocumentCID,
+        caseData.description,
+        caseData.initialProofName,
+        caseData.initialProofCID
+      ).send({ from: account });
 
-        // Get the case ID from the blockchain event
-        const caseIdBigInt = response.events.CaseCreated.returnValues.caseId;
+      // Get the case ID from the blockchain event
+      const caseIdBigInt = response.events.CaseCreated.returnValues.caseId;
 
-        // Convert caseId from BigInt to a number if needed
-        const caseId = convertBigIntToNumber(caseIdBigInt);
+      // Convert caseId from BigInt to a number if needed
+      const caseId = convertBigIntToNumber(caseIdBigInt);
 
-        if (caseId === null) {
-            throw new Error('Unable to convert caseId to a number');
-        }
+      if (caseId === null) {
+        throw new Error('Unable to convert caseId to a number');
+      }
 
-        // Send caseId and defender details to the backend to be stored in MongoDB
-        const defenderData = {
-            caseId,
-            defenderName: formData.defenderName,
-            defenderEmail: formData.defenderEmail,
-            defenderPassword: formData.defenderEmail
-        };
+      // Send caseId and defender details to the backend to be stored in MongoDB
+      const defenderData = {
+        caseId,
+        defenderName: formData.defenderName,
+        defenderEmail: formData.defenderEmail,
+        defenderPassword: formData.defenderEmail
+      };
 
-        await api.post('/police/new-case', defenderData);
+      await api.post('/police/new-case', defenderData);
 
-        alert('Case created successfully and defender updated.');
-        navigate('/police/dashboard')
-        setFormData({
-            description: '',
-            initialProofName: '',
-            defenderName: '',
-            defenderEmail: '',
-            defenderPassword: ''
-        });
-        setSelectedFile(null);
-        setInitialProofFile(null);
-        setFileCid('');
-        setInitialProofCid('');
+      alert('Case created successfully and defender updated.');
+      navigate('/police/dashboard');
+      setFormData({
+        description: '',
+        initialProofName: '',
+        defenderName: '',
+        defenderEmail: '',
+        defenderPassword: ''
+      });
+      setSelectedFile(null);
+      setInitialProofFile(null);
+      setFileCid('');
+      setInitialProofCid('');
     } catch (err) {
-        setError('Error creating case');
-        console.error(err.message);
+      setError('Error creating case');
+      console.error(err.message);
     }
-};
+  };
 
-// Helper function to convert BigInt to a number
-const convertBigIntToNumber = (bigIntValue) => {
+  // Helper function to convert BigInt to a number
+  const convertBigIntToNumber = (bigIntValue) => {
     // Check if BigInt is a string with 'n' suffix
     if (typeof bigIntValue === 'string' && bigIntValue.endsWith('n')) {
-        // Remove 'n' suffix and convert to number
-        return parseInt(bigIntValue.slice(0, -1), 10);
+      // Remove 'n' suffix and convert to number
+      return parseInt(bigIntValue.slice(0, -1), 10);
     }
-    
+
     // Handle cases where BigInt is already a number
     if (typeof bigIntValue === 'bigint') {
-        return Number(bigIntValue);
+      return Number(bigIntValue);
     }
-    
+
     // Handle unexpected format
     return null;
-};
-
+  };
 
   const connectWallet = async () => {
     if (web3) {
@@ -270,6 +325,11 @@ const convertBigIntToNumber = (bigIntValue) => {
 
   return (
     <NewCaseContainer>
+      <HamburgerMenu onClick={handleMenuToggle}>☰</HamburgerMenu>
+      <NavDropdown show={showMenu}>
+        <NavLink to="/police/dashboard">Dashboard</NavLink>
+        <NavLink to="/logout">Logout</NavLink>
+      </NavDropdown>
       <ConnectButton onClick={connectWallet}>
         {account ? `Connected: ${account.substring(0, 6)}...${account.slice(-4)}` : 'Connect Web3 Wallet'}
       </ConnectButton>

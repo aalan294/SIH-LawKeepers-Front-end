@@ -60,7 +60,7 @@ const Error = styled.div`
   font-size: 1.2rem;
 `;
 
-const DefCaseDet = () => {
+const JudCaseDet = () => {
   const { id } = useParams(); // Get case ID from URL
   const [caseDetails, setCaseDetails] = useState({});
   const [loading, setLoading] = useState(true);
@@ -161,4 +161,4 @@ const DefCaseDet = () => {
   );
 };
 
-export default DefCaseDet;
+export default JudCaseDet;

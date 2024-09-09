@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Home from './Pages/Home'
 
@@ -35,14 +35,23 @@ import NewCase from './Pages/Police/NewCase';
 import PolDashboard from './Pages/Police/PolDashboard';
 import PolLogin from './Pages/Police/PolLogin';
 import UpdateCase from './Pages/Police/UpdateCase';
+import LawCaseDet from './Pages/Lawyer/LawCaseDet';
+import JudCaseDet from './Pages/Judge/JudCaseDet';
+import VedioCall from './Pages/VedioCall';
 
 const App = () => {
+  const contract = '0xA4bd3b69114E22096CbF24D285Ae0c56e3025186'
+  useEffect(()=>{
+    localStorage.setItem('SIH-contract', JSON.stringify(contract));
+  })
   return (
     <>
     <Router>
       <Routes>
         {/* Home */}
         <Route path="/" element={<Home />} />
+
+        <Route path="/video-call" element={<VedioCall/>} />
 
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
@@ -64,12 +73,14 @@ const App = () => {
         <Route path="/judge/login" element={<JudLogin />} />
         <Route path="/judge/dashboard" element={<JudDashboard />} />
         <Route path="/judge/case" element={<JudCase />} />
+        <Route path="/judge/case-details/:id" element={<JudCaseDet/>} />
 
         {/* Lawyer Routes */}
         <Route path="/lawyer/login" element={<LawLogin />} />
         <Route path="/lawyer/dashboard" element={<LawDashboard />} />
         <Route path="/lawyer/case" element={<LawCase />} />
         <Route path="/lawyer/requests" element={<Requests />} />
+        <Route path="/lawyer/case-details/:id" element={<LawCaseDet/>} />
 
         {/* Police Station Routes */}
         <Route path="/police/login" element={<PolLogin />} />
